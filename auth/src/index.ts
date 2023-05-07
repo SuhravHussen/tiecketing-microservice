@@ -17,7 +17,7 @@ app.use(signoutRouter);
 app.use(signupRouter);
 
 // 404 handler
-app.all("*", async (req, res, next) => {
+app.all("*", (req, res, next) => {
   throw new HttpException(404, "Route Not Found");
 });
 
