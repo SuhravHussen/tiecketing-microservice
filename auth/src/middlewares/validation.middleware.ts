@@ -1,4 +1,14 @@
-import { body, validationResult } from "express-validator";
+import {
+  Result,
+  ValidationError,
+  body,
+  validationResult,
+} from "express-validator";
+
+interface CustomError extends Error {
+  status?: number;
+  errors?: Result<ValidationError>;
+}
 
 const validateEmailAndPassword = [
   body("email").isEmail().withMessage("Please provide a valid email address."),
@@ -8,7 +18,11 @@ const validateEmailAndPassword = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      const error = new Error("Validation error") as CustomError;
+      error.status = 400;
+      error.errors = errors;
+
+      return next(error);
     }
     next();
   },
