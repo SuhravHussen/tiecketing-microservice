@@ -6,6 +6,12 @@ interface CustomError extends Error {
   errors?: Result<ValidationError>;
 }
 
+interface response {
+  error: boolean;
+  messages: string[];
+  data: any;
+}
+
 type ErrorHandler = (
   err: CustomError,
   req: Request,
@@ -24,8 +30,8 @@ const errorHandler: ErrorHandler = (err, req, res: Response, next) => {
     // If the error is from our custom error handler, return the status code and message
     messages.push(err.message);
   }
-
-  res.status(err.status || 400).json({ error: true, messages, data: null });
+  const resJson: response = { error: true, messages, data: null };
+  res.status(err.status || 400).json(resJson);
 };
 
 export default errorHandler;
