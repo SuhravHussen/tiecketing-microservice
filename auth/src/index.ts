@@ -6,6 +6,7 @@ import { signinRouter } from "./routes/signin.route";
 import { signoutRouter } from "./routes/signout.route";
 import { signupRouter } from "./routes/signup.route";
 import errorHandler from "./middlewares/errorHandler.middleware";
+import { HttpException } from "./exceptions/HttpException";
 
 const app = express();
 app.use(json());
@@ -14,6 +15,11 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+
+// 404 handler
+app.all("*", async (req, res, next) => {
+  throw new HttpException(404, "Route Not Found");
+});
 
 //error handler
 app.use(errorHandler);
