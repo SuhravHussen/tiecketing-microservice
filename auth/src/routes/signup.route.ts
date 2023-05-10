@@ -1,14 +1,40 @@
 import * as express from "express";
 import validateEmailAndPassword from "../middlewares/validation.middleware";
+import userModel from "../models/user.model";
+import { HttpException } from "../exceptions/HttpException";
 
 const router = express.Router();
 
 router.post(
   "/api/users/signup",
   validateEmailAndPassword,
-  (req: express.Request, res: express.Response) => {
-    const { email, password } = req.body;
-    res.send({ email, password });
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const { email, password } = req.body;
+
+      //check if user already exists
+      const alreadyExist = await userModel.findOne({ email });
+
+      if (alreadyExist) {
+        return res.status(400).json({
+          message: "User already exists",
+          error: true,
+          data: null,
+        });
+      }
+
+      //create new user
+      const user = userModel.build({ email, password });
+      await user.save();
+
+      res.status(201).send({
+        message: "User created successfully",
+        data: user,
+        error: false,
+      });
+    } catch (err) {
+      throw new HttpException(500, err.message || "Internal Server Error");
+    }
   }
 );
 
