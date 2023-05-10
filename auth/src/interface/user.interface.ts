@@ -11,6 +11,7 @@ export interface User {
 // that a user document has
 export interface UserDocument extends User, Document {
   _id: string;
+  comparePassword(candidatePassword: string): Promise<boolean>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -19,4 +20,5 @@ export interface UserDocument extends User, Document {
 // that a user model has
 export interface userModelInterface extends Model<UserDocument> {
   build(props: User): UserDocument;
+  compare(candidatePassword: string): Promise<boolean>;
 }
