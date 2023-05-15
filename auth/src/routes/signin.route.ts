@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import * as express from "express";
 import validateEmailAndPassword from "../middlewares/validation.middleware";
 import userModel from "../models/user.model";
@@ -26,6 +27,19 @@ router.post(
       const isValidPassword = await user.comparePassword(password);
 
       if (isValidPassword) {
+        const userJwt = jwt.sign(
+          {
+            id: user.id,
+            email: user.email,
+          },
+          process.env.JWT_SECRET! // ! tells typescript that we have already checked for undefined
+        );
+
+        // Store it on session object
+        req.session = {
+          jwt: userJwt,
+        };
+
         return res.status(200).json({
           message: "User logged in successfully",
           error: false,

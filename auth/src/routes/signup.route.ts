@@ -1,4 +1,5 @@
 import * as express from "express";
+import jwt from "jsonwebtoken";
 import validateEmailAndPassword from "../middlewares/validation.middleware";
 import userModel from "../models/user.model";
 import { HttpException } from "../exceptions/HttpException";
@@ -26,6 +27,20 @@ router.post(
       //create new user
       const user = userModel.build({ email, password });
       await user.save();
+
+      // Generate JWT
+      const userJwt = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        process.env.JWT_SECRET! // ! tells typescript that we have already checked for undefined
+      );
+
+      // Store it on session object
+      req.session = {
+        jwt: userJwt,
+      };
 
       res.status(201).send({
         message: "User created successfully",

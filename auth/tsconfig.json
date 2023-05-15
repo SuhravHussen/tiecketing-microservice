@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "es2017",
+    "esModuleInterop": true,
     "lib": ["es2017"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
