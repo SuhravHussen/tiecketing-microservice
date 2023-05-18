@@ -21,6 +21,14 @@ const userSchema: Schema = new Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      transform(_, ret) {
+        delete ret.password;
+        delete ret.__v;
+        ret.id = ret._id;
+        delete ret._id;
+      },
+    },
   }
 );
 
