@@ -3,7 +3,7 @@ import privateRoute from "../middlewares/privateRoute.middleware";
 
 const router = express.Router();
 
-router.post(
+router.get(
   "/api/users/signout",
   privateRoute,
   (req: express.Request, res: express.Response) => {
