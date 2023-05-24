@@ -1,4 +1,5 @@
 import React from "react";
+import Signin from "./common/signin";
 
 function mainLayouts({ children }) {
   return (
@@ -91,7 +92,11 @@ function mainLayouts({ children }) {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Sign In</a>
+          <label htmlFor="my-modal-4" className="btn">
+            {" "}
+            <a className="btn">Sign In</a>
+          </label>
+          <Signin />
         </div>
       </div>
 
