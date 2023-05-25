@@ -68,6 +68,8 @@ export default function Signin() {
           setTimeout(() => {
             setShowA(false);
           }, 3000);
+          setUser(data.data);
+          localStorage.setItem("user", JSON.stringify(data.data));
         } else {
           setError(data?.message || "Something went wrong");
         }
