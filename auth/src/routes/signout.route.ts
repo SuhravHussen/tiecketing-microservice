@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.get(
   "/api/users/signout",
-  privateRoute,
   (req: express.Request, res: express.Response) => {
     req.session = null;
     res.status(200).json({

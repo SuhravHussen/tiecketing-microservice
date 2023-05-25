@@ -1,10 +1,6 @@
 import request from "supertest";
 import app from "../app";
 
-it("return error if user is not authenticated", async () => {
-  await request(app).get("/api/users/signout").send().expect(401);
-});
-
 it("clears the cookie after signing out", async () => {
   const res = await request(app)
     .post("/api/users/signup")
