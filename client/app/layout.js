@@ -1,3 +1,4 @@
+import { GlobalContextProvider } from "@/context/store";
 import "./globals.css";
 import MainLayouts from "@/components/Layouts/mainLayouts";
 
@@ -10,7 +11,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <MainLayouts>{children}</MainLayouts>
+        <GlobalContextProvider>
+          <MainLayouts>{children}</MainLayouts>
+        </GlobalContextProvider>
       </body>
     </html>
   );

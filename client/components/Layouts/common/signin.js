@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useGlobalContext } from "../../../context/store";
 
 export default function Signin() {
   const [mode, setMode] = React.useState("login");
@@ -10,6 +11,9 @@ export default function Signin() {
   const [showA, setShowA] = React.useState(false);
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+
+  const { user, setUser } = useGlobalContext();
+
   const signIn = async () => {
     if ((mode === "login" && !email) || !password) {
       setError("Please fill all fields");
@@ -38,6 +42,8 @@ export default function Signin() {
           setTimeout(() => {
             setShowA(false);
           }, 3000);
+          setUser(data.data);
+          localStorage.setItem("user", JSON.stringify(data.data));
         } else {
           setError(data?.message || "Something went wrong");
         }

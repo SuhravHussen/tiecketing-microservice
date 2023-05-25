@@ -1,7 +1,16 @@
+"use client";
+
 import React from "react";
 import Signin from "./common/signin";
-
+import { useGlobalContext } from "../../context/store";
+import logout from "@/helpers/logout";
 function mainLayouts({ children }) {
+  const { user, setUser } = useGlobalContext();
+
+  const handleSignOut = () => {
+    logout(setUser);
+  };
+
   return (
     <div className="min-h-screen">
       <div className="navbar bg-primary">
@@ -92,11 +101,20 @@ function mainLayouts({ children }) {
           </ul>
         </div>
         <div className="navbar-end">
-          <label htmlFor="my-modal-4" className="btn">
-            {" "}
-            <a className="btn">Sign In</a>
-          </label>
-          <Signin />
+          {!user?.email && (
+            <>
+              {" "}
+              <label htmlFor="my-modal-4" className="btn">
+                <a className="btn">Sign In</a>
+              </label>
+              <Signin />
+            </>
+          )}
+          {user?.email && (
+            <a className="btn" onClick={handleSignOut}>
+              Sign out
+            </a>
+          )}
         </div>
       </div>
 
