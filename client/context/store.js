@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  Dispatch,
-  SetStateAction,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const globalStateContext = createContext({
   user: {
@@ -20,6 +14,13 @@ export const GlobalContextProvider = ({ children }) => {
     id: null,
     email: null,
   });
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, []);
 
   return (
     <globalStateContext.Provider value={{ user, setUser }}>
