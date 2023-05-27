@@ -8,7 +8,7 @@ export default function Signin() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [showA, setShowA] = React.useState(true);
+  const [showA, setShowA] = React.useState(false);
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
