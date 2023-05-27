@@ -8,26 +8,23 @@ export default function Signin() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [showA, setShowA] = React.useState(false);
+  const [showA, setShowA] = React.useState(true);
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
   const { user, setUser } = useGlobalContext();
 
   const signIn = async () => {
-    if ((mode === "login" && !email) || !password) {
-      setError("Please fill all fields");
-      setLoading(false);
-      return;
-    } else if ((mode === "signup" && !email) || !password || !confirmPassword) {
-      setError("Please fill all fields");
-      setLoading(false);
-      return;
-    }
+    setError("");
+    setLoading(true);
+
     try {
-      setError("");
-      setLoading(true);
       if (mode === "login") {
+        if (!email || !password) {
+          setError("Please fill all fields");
+          setLoading(false);
+          return;
+        }
         const res = await fetch("/api/users/signin", {
           method: "POST",
           headers: {
@@ -49,6 +46,11 @@ export default function Signin() {
         }
       }
       if (mode === "signup") {
+        if (!email || !password || !confirmPassword) {
+          setError("Please fill all fields");
+          setLoading(false);
+          return;
+        }
         if (password !== confirmPassword) {
           setError("Password do not match");
           setLoading(false);
@@ -105,7 +107,7 @@ export default function Signin() {
           {" "}
           <div className="alert alert-success">
             <div>
-              <span>Sign in Successfully</span>
+              <span>logged in Successfully</span>
             </div>
           </div>
         </div>
