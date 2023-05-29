@@ -33,6 +33,7 @@ router.post(
         {
           id: user.id,
           email: user.email,
+          exp: Math.floor(Date.now() / 1000) + 3 * 24 * 60 * 60, // Expire in 3 days
         },
         process.env.JWT_SECRET! // ! tells typescript that we have already checked for undefined
       );

@@ -2,13 +2,14 @@
 
 import React from "react";
 import { useGlobalContext } from "../../../context/store";
+import { toast } from "react-toastify";
 
 export default function Signin() {
   const [mode, setMode] = React.useState("login");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [showA, setShowA] = React.useState(false);
+  const [showA, setShowA] = React.useState(true);
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
@@ -35,10 +36,7 @@ export default function Signin() {
         const data = await res.json();
         if (!data.error) {
           closeModal();
-          setShowA(true);
-          setTimeout(() => {
-            setShowA(false);
-          }, 3000);
+          toast("logged in successfully");
           setUser(data.data);
           localStorage.setItem("user", JSON.stringify(data.data));
         } else {
@@ -66,10 +64,7 @@ export default function Signin() {
         const data = await res.json();
         if (!data.error) {
           closeModal();
-          setShowA(true);
-          setTimeout(() => {
-            setShowA(false);
-          }, 3000);
+          toast("Signed in successfully");
           setUser(data.data);
           localStorage.setItem("user", JSON.stringify(data.data));
         } else {
@@ -101,18 +96,6 @@ export default function Signin() {
   }
   return (
     <>
-      {/* show alert if success */}
-      {showA && (
-        <div className="toast toast-end">
-          {" "}
-          <div className="alert alert-success">
-            <div>
-              <span>logged in Successfully</span>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* sign in modal */}
       <input type="checkbox" id="my-modal-4" className="modal-toggle" />
       <label htmlFor="my-modal-4" className="modal cursor-pointer">
@@ -160,6 +143,7 @@ export default function Signin() {
             >
               {mode === "login" ? "Sign Up" : "Login"}
             </button>
+
             {/* error message */}
             <small className="text-red-500">{error}</small>
           </div>

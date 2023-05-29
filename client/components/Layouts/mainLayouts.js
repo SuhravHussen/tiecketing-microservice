@@ -1,9 +1,11 @@
 "use client";
 
-import React from "react";
+import { ToastContainer } from "react-toastify";
 import Signin from "./common/signin";
 import { useGlobalContext } from "../../context/store";
 import logout from "@/helpers/logout";
+import "react-toastify/dist/ReactToastify.css";
+
 function mainLayouts({ children }) {
   const { user, setUser } = useGlobalContext();
 
@@ -13,6 +15,20 @@ function mainLayouts({ children }) {
 
   return (
     <div className="min-h-screen">
+      {/* // notification signedIn */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <div className="navbar bg-primary">
         <div className="navbar-start">
           <div className="dropdown">
