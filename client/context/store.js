@@ -9,18 +9,17 @@ const globalStateContext = createContext({
   },
 });
 
-export const GlobalContextProvider = ({ children }) => {
+export const GlobalContextProvider = ({ children, userData }) => {
   const [user, setUser] = useState({
     id: null,
     email: null,
   });
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setUser(JSON.parse(user));
+    if (userData?.email) {
+      setUser(userData);
     }
-  }, []);
+  }, [userData]);
 
   return (
     <globalStateContext.Provider value={{ user, setUser }}>
