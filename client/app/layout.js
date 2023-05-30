@@ -41,7 +41,6 @@ async function getData() {
 
 export default async function RootLayout({ children }) {
   const user = await getData();
-  console.log(user);
   return (
     <html lang="en">
       <body>

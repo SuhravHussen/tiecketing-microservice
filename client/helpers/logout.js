@@ -1,15 +1,19 @@
 "use client";
 
 const logout = (callback) => {
-  localStorage.removeItem("user");
-  callback(null);
   fetch("/api/users/signout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-  }).catch((err) => console.log(err));
+  }).then(() => {
+    callback({
+      id: null,
+      email: null,
+    });
+    window.location.replace("/");
+  });
 };
 
 export default logout;
