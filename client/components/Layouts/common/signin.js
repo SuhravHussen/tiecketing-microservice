@@ -75,7 +75,7 @@ export default function Signin() {
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      setError("Something went wrong");
+      setError(err.message || "Something went wrong");
     }
   };
 
