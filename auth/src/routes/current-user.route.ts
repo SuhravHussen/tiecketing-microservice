@@ -1,5 +1,5 @@
 import * as express from "express";
-import privateRoute from "../middlewares/privateRoute.middleware";
+import { privateRoute } from "@sh-tickets/common";
 
 const router = express.Router();
 

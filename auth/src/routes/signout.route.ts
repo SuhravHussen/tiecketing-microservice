@@ -1,5 +1,4 @@
 import * as express from "express";
-import privateRoute from "../middlewares/privateRoute.middleware";
 
 const router = express.Router();
 

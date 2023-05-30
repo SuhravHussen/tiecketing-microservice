@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { HttpException } from "./exceptions/HttpException";
+import { HttpException } from "@sh-tickets/common";
 import app from "./app";
 
 //mongodb

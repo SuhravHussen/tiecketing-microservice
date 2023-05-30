@@ -1,8 +1,7 @@
 import * as express from "express";
 import jwt from "jsonwebtoken";
-import validateEmailAndPassword from "../middlewares/validation.middleware";
+import { validateEmailAndPassword, HttpException } from "@sh-tickets/common";
 import userModel from "../models/user.model";
-import { HttpException } from "../exceptions/HttpException";
 
 const router = express.Router();
 

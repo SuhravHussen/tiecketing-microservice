@@ -1,4 +1,4 @@
-import { HttpException } from "../exceptions/HttpException";
+import { HttpException } from "@sh-tickets/common";
 import { genSalt, hash } from "bcrypt";
 
 export const hashPassword = async (password: string): Promise<string> => {

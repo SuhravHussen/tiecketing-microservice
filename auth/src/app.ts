@@ -5,8 +5,7 @@ import { currentUserRouter } from "./routes/current-user.route";
 import { signinRouter } from "./routes/signin.route";
 import { signoutRouter } from "./routes/signout.route";
 import { signupRouter } from "./routes/signup.route";
-import errorHandler from "./middlewares/errorHandler.middleware";
-import { HttpException } from "./exceptions/HttpException";
+import { HttpException, errorHandler } from "@sh-tickets/common";
 
 import cookieSession from "cookie-session";
 
