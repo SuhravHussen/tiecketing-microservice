@@ -3,6 +3,7 @@ import express from "express";
 import { json } from "body-parser";
 
 import { HttpException, errorHandler } from "@sh-tickets/common";
+import createTickerRouter from "./routes/create-ticket.route";
 
 import cookieSession from "cookie-session";
 
@@ -18,6 +19,7 @@ app.use(
 );
 
 // routes
+app.use(createTickerRouter);
 
 // 404 handler
 app.all("*", (req, res, next) => {

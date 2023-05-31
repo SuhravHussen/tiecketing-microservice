@@ -1301,10 +1301,10 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
-"@sh-tickets/common@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@sh-tickets/common/-/common-1.0.12.tgz#75b06b595d8987042f7a71960c7c3cb800b9307a"
-  integrity sha512-eK8yuhkCxUxQRofoU8shQEjqiN+cgsFygClWdXIk+RsKEH5Mmwfx0wW9skrl0lF/1YiNymp6gVPh92FqdfiiZw==
+"@sh-tickets/common@^1.0.16":
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@sh-tickets/common/-/common-1.0.16.tgz#5adb73c314a21eeffee4623f4af2a55c0835b17a"
+  integrity sha512-rv1pBmra76Ow3LGsWtoJ7OqnpavFIWXYQ3HrkYyYzPaBJR05UVHof8dc9jb8Ty2gsW91CA06eMsbTiB8mpgWhQ==
   dependencies:
     "@types/cookie-session" "^2.0.44"
     "@types/express" "^4.17.17"
