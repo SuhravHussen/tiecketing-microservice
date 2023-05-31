@@ -6,7 +6,7 @@ import app from "./app";
 const start = async () => {
   try {
     if (!process.env.JWT_SECRET || !process.env.MONGO_URI) {
-      throw new HttpException(500, " env must be defined");
+      throw new HttpException(500, "env must be defined");
     }
 
     await mongoose.connect(process.env.MONGO_URI);
@@ -14,7 +14,7 @@ const start = async () => {
 
     //listen to port
     app.listen(3000, () => {
-      console.log("Listening on port 3000!!!!!!!!");
+      console.log("Listening on port 3000!!!!!!!! from tickets");
     });
   } catch (err) {
     console.log(err);
