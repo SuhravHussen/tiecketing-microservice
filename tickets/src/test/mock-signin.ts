@@ -1,5 +1,7 @@
 import Jwt from "jsonwebtoken";
-const mockSignIn = (valid: boolean) => {
+import mongoose from "mongoose";
+
+const mockSignIn = (valid: boolean, randomId = false) => {
   if (!valid) {
     const sessionObj = { jwt: "sdhsdbhsdbvhsdbvshdbhsbd" };
 
@@ -10,7 +12,9 @@ const mockSignIn = (valid: boolean) => {
     return [`session=${base64}`];
   }
   const payload = {
-    id: "1234",
+    id: randomId
+      ? new mongoose.Types.ObjectId().toHexString()
+      : "5f9d7b3b2e3b3b2e3b3b2e3b",
     email: "tes@test.com",
   };
 

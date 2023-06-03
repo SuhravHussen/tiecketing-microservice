@@ -64,5 +64,8 @@ it("must create a ticket with valid inputs", async () => {
       price: 10,
     })
     .expect(201);
-  console.log(res.body);
+
+  expect(res.body.data.title).toEqual("test");
+  expect(res.body.data.price).toEqual(10);
+  expect(res.body.data.userId).toBeDefined();
 });
