@@ -1301,7 +1301,7 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
-"@sh-tickets/common@^1.0.16":
+"@sh-tickets/common@^1.0.17":
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/@sh-tickets/common/-/common-1.0.17.tgz#c144e292ae2139b43bf244f68a21cdc1e4da95af"
   integrity sha512-kGr+3dFyGy95S3il401bDENSlL+EljzSy8O3kttX9uTjp//8mjzlykH3MB5z5Kh9oDuHe/xMzSUW8ovXbO6N6A==

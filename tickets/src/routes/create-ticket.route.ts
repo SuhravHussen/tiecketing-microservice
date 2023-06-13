@@ -3,6 +3,9 @@ import { Router, Request, Response } from "express";
 import validateTicket from "../middlewares/validation-tiicket.middleware";
 import ticketModel from "../models/ticket.model";
 import { privateRoute } from "@sh-tickets/common";
+import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
+import { natsWrapper } from "../nats-wrapper";
+
 const router = Router();
 
 declare global {
@@ -29,6 +32,13 @@ router.post(
       });
 
       await ticket.save();
+
+      await new TicketCreatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+      });
 
       res.status(201).send({
         message: "Ticket created successfully",

@@ -1,6 +1,7 @@
 import request from "supertest";
 import app from "../app";
 import mockSignIn from "./mock-signin";
+jest.mock("../nats-wrapper");
 
 const createTicket = () => {
   return request(app)

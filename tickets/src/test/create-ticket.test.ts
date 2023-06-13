@@ -1,7 +1,8 @@
 import request from "supertest";
 import app from "../app";
-import Jwt from "jsonwebtoken";
 import mockSignIn from "./mock-signin";
+
+jest.mock("../nats-wrapper");
 
 it("must be signed in to create a ticket", async () => {
   const cookie = mockSignIn(false);

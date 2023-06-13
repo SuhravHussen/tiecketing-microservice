@@ -1,6 +1,7 @@
 import request from "supertest";
 import app from "../app";
 import mockSignIn from "./mock-signin";
+jest.mock("../nats-wrapper");
 
 it("must be signed in to find a ticket", async () => {
   await request(app).post("/api/tickets").send({}).expect(401);

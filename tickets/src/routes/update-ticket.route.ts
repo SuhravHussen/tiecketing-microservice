@@ -1,6 +1,8 @@
 import { Router } from "express";
 import ticketModel from "../models/ticket.model";
 import { privateRoute } from "@sh-tickets/common";
+import { natsWrapper } from "../nats-wrapper";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
 
 const router = Router();
 
@@ -35,6 +37,12 @@ router.put("/api/tickets/update/:id", privateRoute, async (req, res) => {
         price: price || ticket.price,
       });
       await ticket.save();
+      new TicketUpdatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+      });
       return res.status(200).send({
         message: "Ticket updated",
         data: ticket,

@@ -1,6 +1,7 @@
 import request from "supertest";
 import app from "../app";
 import mockSignIn from "./mock-signin";
+jest.mock("../nats-wrapper");
 
 it("must return error if not signed in", async () => {
   await request(app)
