@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../app";
 import mockSignIn from "./mock-signin";
-
+import { natsWrapper } from "../nats-wrapper";
 jest.mock("../nats-wrapper");
 
 it("must be signed in to create a ticket", async () => {
@@ -69,4 +69,19 @@ it("must create a ticket with valid inputs", async () => {
   expect(res.body.data.title).toEqual("test");
   expect(res.body.data.price).toEqual(10);
   expect(res.body.data.userId).toBeDefined();
+});
+
+it("must publish an event", async () => {
+  const cookie = mockSignIn(true);
+
+  const res = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", cookie)
+    .send({
+      title: "test",
+      price: 10,
+    })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

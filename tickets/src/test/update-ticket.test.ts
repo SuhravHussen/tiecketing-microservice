@@ -1,6 +1,7 @@
 import request from "supertest";
 import app from "../app";
 import mockSignIn from "./mock-signin";
+import { natsWrapper } from "../nats-wrapper";
 jest.mock("../nats-wrapper");
 
 it("must return error if not signed in", async () => {
@@ -52,4 +53,25 @@ it("must return updated ticket if user is the owner of the ticket", async () => 
 
   expect(res2.body.data.title).toEqual("test2");
   expect(res2.body.data.price).toEqual(20);
+});
+
+it("must publish an event", async () => {
+  const res = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", mockSignIn(true))
+    .send({
+      title: "test",
+      price: 10,
+    });
+
+  await request(app)
+    .put(`/api/tickets/update/${res.body.data.id}`)
+    .set("Cookie", mockSignIn(true))
+    .send({
+      title: "test2",
+      price: 20,
+    })
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

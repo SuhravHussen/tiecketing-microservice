@@ -15,6 +15,8 @@
 
 // the fake client has a publish method which will do nothing but call the callback function.
 
+//in short we are mocking stan.client.publish() method with this fake client.
+
 export const natsWrapper = {
   client: {
     publish: jest.fn().mockImplementation((subject, data, callback) => {
