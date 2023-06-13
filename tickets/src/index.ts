@@ -10,7 +10,23 @@ const start = async () => {
       throw new HttpException(500, "env must be defined");
     }
 
-    await natsWrapper.connect("ticketing", "ashdsj", "http://nats-srv:4222");
+    if (!process.env.NATS_CLIENT_ID) {
+      throw new HttpException(500, "NATS_CLIENT_ID must be defined");
+    }
+
+    if (!process.env.NATS_URL) {
+      throw new HttpException(500, "NATS_URL must be defined");
+    }
+
+    if (!process.env.NATS_CLUSTER_ID) {
+      throw new HttpException(500, "NATS_CLUSTER_ID must be defined");
+    }
+
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL
+    );
 
     natsWrapper.client.on("close", () => {
       console.log("NATS connection closed!");
