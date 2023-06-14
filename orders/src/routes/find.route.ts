@@ -1,12 +1,13 @@
+import { privateRoute } from "@sh-tickets/common";
 import { Router } from "express";
 
 const router = Router();
 
-router.get("/api/orders/all", (req, res) => {
+router.get("/api/orders/all", privateRoute, (req, res) => {
   res.send({});
 });
 
-router.get("/api/orders/:id", (req, res) => {
+router.get("/api/orders/:id", privateRoute, (req, res) => {
   res.send({});
 });
 

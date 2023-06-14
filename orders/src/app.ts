@@ -22,8 +22,8 @@ app.use(
 
 // routes
 app.use(createOrdersRoute);
-app.use(findOrdersRoute);
 app.use(deleteOrdersRoute);
+app.use(findOrdersRoute);
 
 // 404 handler
 app.all("*", (req, res, next) => {
