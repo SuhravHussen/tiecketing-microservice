@@ -1331,10 +1331,10 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
-"@sh-tickets/common@^1.0.17":
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@sh-tickets/common/-/common-1.0.17.tgz#c144e292ae2139b43bf244f68a21cdc1e4da95af"
-  integrity sha512-kGr+3dFyGy95S3il401bDENSlL+EljzSy8O3kttX9uTjp//8mjzlykH3MB5z5Kh9oDuHe/xMzSUW8ovXbO6N6A==
+"@sh-tickets/common@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@sh-tickets/common/-/common-1.0.18.tgz#71b6756f0cf373ee43f7e28eba717a232db4cf06"
+  integrity sha512-Z6xnfDUTmKVfXVld9zNt3IB1UZZc5qpxjzYoPjO66sWQXgbSgsHB8HL/8/RcT+L9QOqjnbh9IAw35r8IfKqkCw==
   dependencies:
     "@types/cookie-session" "^2.0.44"
     "@types/express" "^4.17.17"
