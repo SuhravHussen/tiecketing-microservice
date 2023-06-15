@@ -28,7 +28,7 @@ const orderSchema = new Schema(
   {
     timestamps: true,
     toJSON: {
-      transform(doc, ret) {
+      transform(_, ret) {
         ret.id = ret._id;
         delete ret._id;
       },
@@ -41,6 +41,8 @@ orderSchema.statics.build = (props: order) => {
 };
 
 const OrderModel = model<orderDocument, orderModelInterface>(
-  "Order",
+  "order",
   orderSchema
 );
+
+export { OrderModel };

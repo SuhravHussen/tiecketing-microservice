@@ -27,7 +27,7 @@ app.use(findOrdersRoute);
 
 // 404 handler
 app.all("*", (req, res, next) => {
-  throw new HttpException(404, "Route Not Found");
+  throw new HttpException(404, "Route Not Found!");
 });
 
 //error handler

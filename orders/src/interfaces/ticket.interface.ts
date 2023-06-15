@@ -1,4 +1,4 @@
-import { Document, Model } from "mongoose";
+import mongoose, { Document, Model, mongo } from "mongoose";
 
 // an interface that describes the properties
 // that are required to create a new user
@@ -10,9 +10,10 @@ export interface ticket {
 // an interface that describes the properties
 // that a user document has
 export interface ticketDocument extends ticket, Document {
-  id: string;
+  id: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
+  isReserved(): Promise<boolean>;
 }
 
 // an interface that describes the properties

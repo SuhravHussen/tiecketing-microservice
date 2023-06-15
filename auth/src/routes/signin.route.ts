@@ -8,7 +8,7 @@ const router = express.Router();
 router.post(
   "/api/users/signin",
   validateEmailAndPassword,
-  async (req: express.Request, res: express.Response) => {
+  async (req: express.Request, res: express.Response, next) => {
     try {
       const { email, password } = req.body;
 
@@ -53,7 +53,7 @@ router.post(
         });
       }
     } catch (err) {
-      throw new HttpException(500, err.message || "Internal Server Error");
+      next(err);
     }
   }
 );

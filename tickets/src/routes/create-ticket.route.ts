@@ -23,7 +23,7 @@ router.post(
   "/api/tickets",
   privateRoute,
   validateTicket,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next) => {
     try {
       const ticket = ticketModel.build({
         title: req.body.title,
@@ -46,7 +46,7 @@ router.post(
         error: false,
       });
     } catch (err) {
-      throw new HttpException(500, err.message || "Internal server error");
+      next(err);
     }
   }
 );

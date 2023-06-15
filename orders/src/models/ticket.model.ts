@@ -4,6 +4,7 @@ import {
   ticketDocument,
   ticketModelInterface,
 } from "../interfaces/ticket.interface";
+import { OrderModel } from "./order.model";
 
 const ticketSchema = new Schema(
   {
@@ -20,7 +21,7 @@ const ticketSchema = new Schema(
   {
     timestamps: true,
     toJSON: {
-      transform(doc, ret) {
+      transform(_, ret) {
         ret.id = ret._id;
         delete ret._id;
       },
@@ -29,10 +30,23 @@ const ticketSchema = new Schema(
 );
 
 ticketSchema.statics.build = (props: ticket) => {
-  return new OrderModel(props);
+  return new ticketModel(props);
 };
 
-const OrderModel = model<ticketDocument, ticketModelInterface>(
-  "Order",
+ticketSchema.methods.isReserved = async function () {
+  // this === the ticket document that we just called 'isReserved' on
+  const existingOrder = await OrderModel.findOne({
+    ticket: this.id,
+    status: {
+      $in: ["created", "awaiting:payment", "complete"],
+    },
+  });
+  return !!existingOrder;
+};
+
+const ticketModel = model<ticketDocument, ticketModelInterface>(
+  "ticket",
   ticketSchema
 );
+
+export { ticketModel };

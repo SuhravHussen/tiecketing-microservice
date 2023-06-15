@@ -3,7 +3,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/api/orders/all", privateRoute, (req, res) => {
+router.get("/api/orders/all", (req, res) => {
   res.send({});
 });
 
