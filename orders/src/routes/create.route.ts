@@ -31,7 +31,7 @@ router.post(
       // make sure that this ticket is not already reserved
 
       const isReserved = await ticket.isReserved();
-      console.log(isReserved);
+
       if (isReserved) {
         throw new HttpException(400, "Ticket is already reserved");
         return;
@@ -42,7 +42,7 @@ router.post(
 
       // build the order and save it to the database
       const order = await OrderModel.build({
-        userId: req.currentUser!.id,
+        userId: req.user.id,
         status: orderStatus.created,
         expiresAt: expiration,
         ticket: ticketId,
@@ -51,7 +51,7 @@ router.post(
 
       // publish an event saying that an order was created
 
-      res.json({
+      res.status(201).json({
         message: "Order created successfully",
         data: order,
         error: false,

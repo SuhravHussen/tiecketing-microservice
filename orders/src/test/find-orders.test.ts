@@ -5,58 +5,41 @@ import { ticketModel } from "../models/ticket.model";
 import { OrderModel } from "../models/order.model";
 import { orderStatus } from "@sh-tickets/common";
 
-it("give error if ticketId does not exist", async () => {
+it("if user is not signed in, it returns 401", async () => {
+  await request(app).get("/api/orders/all").send({}).expect(401);
+});
+
+it("return 404 if no orders found", async () => {
   const cookie = mockSignIn(true);
 
   await request(app)
-    .post("/api/orders/create")
+    .get("/api/orders/all")
     .set("Cookie", cookie)
     .send({})
-    .expect(400);
+    .expect(404);
 });
 
-it("gives error if ticker is already reserved", async () => {
+it("returns orders if found", async () => {
   const ticket = ticketModel.build({
     title: "concert",
     price: 20,
   });
   await ticket.save();
-
-  const order = await OrderModel.build({
-    ticket: ticket.id,
-    userId: "1234",
-    status: orderStatus.created,
-    expiresAt: new Date(),
-  });
-  await order.save();
 
   const cookie = mockSignIn(true);
 
   await request(app)
-    .post("/api/orders/create")
-    .set("Cookie", cookie)
-    .send({
-      ticketId: ticket.id,
-    })
-    .expect(400);
-});
-
-it("reserves a ticket", async () => {
-  const ticket = ticketModel.build({
-    title: "concert",
-    price: 20,
-  });
-  await ticket.save();
-
-  const cookie = mockSignIn(true);
-
-  const res = await request(app)
     .post("/api/orders/create")
     .set("Cookie", cookie)
     .send({
       ticketId: ticket.id,
     })
     .expect(201);
-});
 
-it.todo("emits an order created event");
+  const res = await request(app)
+    .get("/api/orders/all")
+    .set("Cookie", cookie)
+    .send({});
+
+  expect(res.body.data[0].ticket.id).toEqual(ticket.id);
+});
