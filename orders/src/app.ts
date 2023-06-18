@@ -7,7 +7,7 @@ import cookieSession from "cookie-session";
 
 import { createOrdersRoute } from "./routes/create.route";
 import { findOrdersRoute } from "./routes/find.route";
-import { deleteOrdersRoute } from "./routes/delete.route";
+import { cancelOrderRouter } from "./routes/cancel.route";
 
 const app = express();
 app.set("trust proxy", true);
@@ -22,7 +22,7 @@ app.use(
 
 // routes
 app.use(createOrdersRoute);
-app.use(deleteOrdersRoute);
+app.use(cancelOrderRouter);
 app.use(findOrdersRoute);
 
 // 404 handler
