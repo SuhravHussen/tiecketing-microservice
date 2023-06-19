@@ -7,7 +7,12 @@ export interface order {
   userId: string;
   status: orderStatus;
   expiresAt: Date;
-  ticket: mongoose.Types.ObjectId;
+  ticket:
+    | {
+        id: string;
+        price: number;
+      }
+    | mongoose.Types.ObjectId;
 }
 
 // an interface that describes the properties

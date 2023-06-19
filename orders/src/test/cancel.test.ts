@@ -5,6 +5,7 @@ import { ticketModel } from "../models/ticket.model";
 import { OrderModel } from "../models/order.model";
 import { orderStatus } from "@sh-tickets/common";
 import mongoose from "mongoose";
+import { natsWrapper } from "../nats-wrapper";
 
 it("gives error if order does not exist", async () => {
   const cookie = mockSignIn(true);
@@ -57,9 +58,38 @@ it("cancels an order", async () => {
     })
     .expect(201);
 
-  request(app)
+  console.log(order.body);
+  const res = await request(app)
     .patch(`/api/orders/cancel/${order.body.data.id}`)
     .set("Cookie", cookie)
     .send({})
     .expect(200);
+
+  expect(res.body.data.status).toEqual(orderStatus.cancelled);
+});
+
+it("publishes an event", async () => {
+  const ticket = ticketModel.build({
+    title: "concert",
+    price: 20,
+  });
+  await ticket.save();
+
+  const cookie = mockSignIn(true);
+
+  const order = await request(app)
+    .post("/api/orders/create")
+    .set("Cookie", cookie)
+    .send({
+      ticketId: ticket.id,
+    })
+    .expect(201);
+
+  await request(app)
+    .patch(`/api/orders/cancel/${order.body.data.id}`)
+    .set("Cookie", cookie)
+    .send({})
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

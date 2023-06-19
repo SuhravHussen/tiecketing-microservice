@@ -1332,9 +1332,9 @@
     tar "^6.1.11"
 
 "@sh-tickets/common@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@sh-tickets/common/-/common-1.0.18.tgz#71b6756f0cf373ee43f7e28eba717a232db4cf06"
-  integrity sha512-Z6xnfDUTmKVfXVld9zNt3IB1UZZc5qpxjzYoPjO66sWQXgbSgsHB8HL/8/RcT+L9QOqjnbh9IAw35r8IfKqkCw==
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@sh-tickets/common/-/common-1.0.19.tgz#7fb844ed53dbd3c4b47380e675f57b5456379bf1"
+  integrity sha512-9chOjESrW9VP9asRQ0rTv7ag/LyevsEurzztkJin4UeUTenXp2GQw/OBBODhmPEME/pJIG3VHCzy5uzJAtdALg==
   dependencies:
     "@types/cookie-session" "^2.0.44"
     "@types/express" "^4.17.17"

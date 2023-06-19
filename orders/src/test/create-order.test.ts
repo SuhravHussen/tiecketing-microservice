@@ -4,6 +4,8 @@ import mockSignIn from "./mock-signin";
 import { ticketModel } from "../models/ticket.model";
 import { OrderModel } from "../models/order.model";
 import { orderStatus } from "@sh-tickets/common";
+import { natsWrapper } from "../nats-wrapper";
+jest.mock("../nats-wrapper");
 
 it("give error if ticketId does not exist", async () => {
   const cookie = mockSignIn(true);
@@ -59,4 +61,22 @@ it("reserves a ticket", async () => {
     .expect(201);
 });
 
-it.todo("emits an order created event");
+it("emits an order created event", async () => {
+  const ticket = ticketModel.build({
+    title: "concert",
+    price: 20,
+  });
+  await ticket.save();
+
+  const cookie = mockSignIn(true);
+
+  await request(app)
+    .post("/api/orders/create")
+    .set("Cookie", cookie)
+    .send({
+      ticketId: ticket.id,
+    })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});

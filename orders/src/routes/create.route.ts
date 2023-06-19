@@ -1,9 +1,11 @@
 import { HttpException, orderStatus, privateRoute } from "@sh-tickets/common";
-import { Response, Router } from "express";
+import { Router } from "express";
 import { validateOrder } from "../middlewares/validate-order.middleware";
 import { ticketModel } from "../models/ticket.model";
 import { OrderModel } from "../models/order.model";
 import { MyCustomResponse } from "../interfaces/response.interface";
+import { natsWrapper } from "../nats-wrapper";
+import { OrderCreatedPublisher } from "../events/publishers/order-created.publisher";
 
 const router = Router();
 
@@ -50,6 +52,16 @@ router.post(
       await order.save();
 
       // publish an event saying that an order was created
+      await new OrderCreatedPublisher(natsWrapper.client).publish({
+        id: order.id.toString(),
+        status: order.status,
+        userId: order.userId,
+        expiresAt: order.expiresAt.toISOString(),
+        ticket: {
+          id: ticket.id,
+          price: ticket.price,
+        },
+      });
 
       res.status(201).json({
         message: "Order created successfully",
