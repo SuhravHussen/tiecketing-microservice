@@ -3,6 +3,7 @@ import mongoose, { Document, Model, mongo } from "mongoose";
 // an interface that describes the properties
 // that are required to create a new user
 export interface ticket {
+  _id: string;
   title: string;
   price: number;
 }
@@ -11,6 +12,7 @@ export interface ticket {
 // that a user document has
 export interface ticketDocument extends ticket, Document {
   id: mongoose.Types.ObjectId;
+  _id: string;
   createdAt: Date;
   updatedAt: Date;
   isReserved(): Promise<boolean>;

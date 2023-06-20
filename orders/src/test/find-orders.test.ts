@@ -2,9 +2,8 @@ import request from "supertest";
 import app from "../app";
 import mockSignIn from "./mock-signin";
 import { ticketModel } from "../models/ticket.model";
-import { OrderModel } from "../models/order.model";
-import { orderStatus } from "@sh-tickets/common";
-import e from "express";
+import mongoose from "mongoose";
+jest.mock("../nats-wrapper");
 
 it("if user is not signed in, it returns 401", async () => {
   await request(app).get("/api/orders/all").send({}).expect(401);
@@ -22,6 +21,7 @@ it("return 404 if no orders found", async () => {
 
 it("returns orders if found", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -47,12 +47,14 @@ it("returns orders if found", async () => {
 
 it("return user's order", async () => {
   const ticketOne = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert one",
     price: 20,
   });
   await ticketOne.save();
 
   const ticketTwo = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert two",
     price: 50,
   });
@@ -87,6 +89,7 @@ it("return user's order", async () => {
 
 it("return order information", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -113,6 +116,7 @@ it("return order information", async () => {
 
 it("return 401 if order doesn't belong to user", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });

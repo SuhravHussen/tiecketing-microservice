@@ -8,6 +8,10 @@ import { OrderModel } from "./order.model";
 
 const ticketSchema = new Schema(
   {
+    _id: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,

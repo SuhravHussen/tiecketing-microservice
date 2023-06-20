@@ -7,6 +7,8 @@ import { orderStatus } from "@sh-tickets/common";
 import mongoose from "mongoose";
 import { natsWrapper } from "../nats-wrapper";
 
+jest.mock("../nats-wrapper");
+
 it("gives error if order does not exist", async () => {
   const cookie = mockSignIn(true);
 
@@ -19,6 +21,7 @@ it("gives error if order does not exist", async () => {
 
 it("gives error if order does not belong to user", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -43,6 +46,7 @@ it("gives error if order does not belong to user", async () => {
 
 it("cancels an order", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -70,6 +74,7 @@ it("cancels an order", async () => {
 
 it("publishes an event", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
