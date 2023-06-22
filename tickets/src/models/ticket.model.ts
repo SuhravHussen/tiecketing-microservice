@@ -4,6 +4,7 @@ import {
   TicketDocument,
   TicketModelInterface,
 } from "../interfaces/ticket.interface";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 const ticketSchema: Schema = new Schema(
   {
@@ -27,13 +28,15 @@ const ticketSchema: Schema = new Schema(
     timestamps: true,
     toJSON: {
       transform(_, ret) {
-        delete ret.__v;
         ret.id = ret._id;
         delete ret._id;
       },
     },
   }
 );
+
+ticketSchema.set("versionKey", "version");
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 ticketSchema.statics.build = function (props: Ticket) {
   return new ticketModel(props);

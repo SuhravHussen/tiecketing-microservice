@@ -8,6 +8,7 @@ export interface Ticket {
 
 export interface TicketDocument extends Ticket, Document {
   id: string;
+  version: number;
   createdAt: Date;
   updatedAt: Date;
 }
