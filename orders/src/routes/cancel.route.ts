@@ -17,6 +17,7 @@ router.patch("/api/orders/cancel/:id", privateRoute, async (req, res, next) => {
     }
     order.status = orderStatus.cancelled;
     await order.save();
+    // checking to see if the ticket has a price to ignore ts error
     if ("price" in order.ticket) {
       await new OrderCancelledPublisher(natsWrapper.client).publish({
         id: order.id.toString(),
@@ -24,6 +25,7 @@ router.patch("/api/orders/cancel/:id", privateRoute, async (req, res, next) => {
           id: order.ticket.id.toString(),
           price: order.ticket.price,
         },
+        version: 4,
       });
     }
     res.send({

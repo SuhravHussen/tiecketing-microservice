@@ -5,7 +5,7 @@ import {
   ticketModelInterface,
 } from "../interfaces/ticket.interface";
 import { OrderModel } from "./order.model";
-
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 const ticketSchema = new Schema(
   {
     _id: {
@@ -33,6 +33,9 @@ const ticketSchema = new Schema(
   }
 );
 
+ticketSchema.set("versionKey", "version");
+ticketSchema.plugin(updateIfCurrentPlugin);
+
 ticketSchema.statics.build = (props: ticket) => {
   return new ticketModel(props);
 };
@@ -46,6 +49,16 @@ ticketSchema.methods.isReserved = async function () {
     },
   });
   return !!existingOrder;
+};
+
+ticketSchema.statics.findByEvent = async (event: {
+  id: string;
+  version: number;
+}) => {
+  return await ticketModel.findOne({
+    _id: event.id,
+    version: event.version - 1,
+  });
 };
 
 const ticketModel = model<ticketDocument, ticketModelInterface>(

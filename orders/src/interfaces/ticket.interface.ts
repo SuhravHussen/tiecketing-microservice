@@ -15,6 +15,7 @@ export interface ticketDocument extends ticket, Document {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
+  version: number;
   isReserved(): Promise<boolean>;
 }
 
@@ -22,4 +23,8 @@ export interface ticketDocument extends ticket, Document {
 // that a user model has
 export interface ticketModelInterface extends Model<ticketDocument> {
   build(props: ticket): ticketDocument;
+  findByEvent(event: {
+    id: string;
+    version: number;
+  }): Promise<ticketDocument | null>;
 }

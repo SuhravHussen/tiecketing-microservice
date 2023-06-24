@@ -1,4 +1,3 @@
-import { HttpException } from "@sh-tickets/common";
 import { Router, Request, Response } from "express";
 import validateTicket from "../middlewares/validation-tiicket.middleware";
 import ticketModel from "../models/ticket.model";
@@ -38,6 +37,7 @@ router.post(
         title: ticket.title,
         price: ticket.price,
         userId: ticket.userId,
+        version: ticket.version,
       });
 
       res.status(201).send({

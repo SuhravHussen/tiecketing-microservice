@@ -132,7 +132,7 @@ it("return 401 if order doesn't belong to user", async () => {
     })
     .expect(201);
 
-  const res = await request(app)
+  await request(app)
     .get(`/api/orders/${body.data.id}`)
     .set("Cookie", mockSignIn(true, true))
     .send({})

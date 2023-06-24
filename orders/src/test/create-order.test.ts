@@ -5,6 +5,7 @@ import { ticketModel } from "../models/ticket.model";
 import { OrderModel } from "../models/order.model";
 import { orderStatus } from "@sh-tickets/common";
 import { natsWrapper } from "../nats-wrapper";
+import mongoose from "mongoose";
 jest.mock("../nats-wrapper");
 
 it("give error if ticketId does not exist", async () => {
@@ -19,6 +20,7 @@ it("give error if ticketId does not exist", async () => {
 
 it("gives error if ticker is already reserved", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -45,6 +47,7 @@ it("gives error if ticker is already reserved", async () => {
 
 it("reserves a ticket", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -52,7 +55,7 @@ it("reserves a ticket", async () => {
 
   const cookie = mockSignIn(true);
 
-  const res = await request(app)
+  await request(app)
     .post("/api/orders/create")
     .set("Cookie", cookie)
     .send({
@@ -63,6 +66,7 @@ it("reserves a ticket", async () => {
 
 it("emits an order created event", async () => {
   const ticket = ticketModel.build({
+    _id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });

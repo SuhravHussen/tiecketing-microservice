@@ -62,7 +62,6 @@ it("cancels an order", async () => {
     })
     .expect(201);
 
-  console.log(order.body);
   const res = await request(app)
     .patch(`/api/orders/cancel/${order.body.data.id}`)
     .set("Cookie", cookie)

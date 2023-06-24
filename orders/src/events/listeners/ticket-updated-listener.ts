@@ -14,9 +14,12 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEventData> {
 
   async onMessage(data: TicketUpdatedEventData["data"], msg: Message) {
     try {
-      const { id, title, price } = data;
+      const { id, title, price, version } = data;
 
-      const ticket = await ticketModel.findById(id);
+      const ticket = await ticketModel.findOne({
+        _id: id,
+        version: version - 1,
+      });
 
       if (!ticket) {
         throw new HttpException(404, "Ticket not found");
@@ -26,6 +29,7 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEventData> {
         title,
         price,
       });
+      await ticket.save();
       msg.ack();
     } catch (err) {}
   }

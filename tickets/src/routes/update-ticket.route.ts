@@ -42,6 +42,7 @@ router.put("/api/tickets/update/:id", privateRoute, async (req, res) => {
         title: ticket.title,
         price: ticket.price,
         userId: ticket.userId,
+        version: ticket.version,
       });
       return res.status(200).send({
         message: "Ticket updated",
