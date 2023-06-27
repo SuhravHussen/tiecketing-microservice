@@ -23,6 +23,14 @@ router.put("/api/tickets/update/:id", privateRoute, async (req, res) => {
       error: true,
     });
   } else {
+    if (ticket.orderId) {
+      return res.status(400).send({
+        message: "Ticket is reserved",
+        data: null,
+        error: true,
+      });
+    }
+
     if (ticket.userId !== req.user!.id) {
       return res.status(401).send({
         message: "Unauthorized",

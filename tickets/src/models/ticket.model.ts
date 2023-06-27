@@ -23,6 +23,9 @@ const ticketSchema: Schema = new Schema(
       type: String,
       required: true,
     },
+    orderId: {
+      type: String,
+    },
   },
   {
     timestamps: true,

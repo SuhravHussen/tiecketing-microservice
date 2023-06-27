@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { HttpException } from "@sh-tickets/common";
 import app from "./app";
 import { natsWrapper } from "./nats-wrapper";
+import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 
 //mongodb
 const start = async () => {
@@ -32,6 +33,9 @@ const start = async () => {
       console.log("NATS connection closed!");
       process.exit();
     });
+
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCreatedListener(natsWrapper.client).listen();
 
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());

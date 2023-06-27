@@ -2,6 +2,7 @@ import request from "supertest";
 import app from "../app";
 import mockSignIn from "./mock-signin";
 import { natsWrapper } from "../nats-wrapper";
+import ticketModel from "../models/ticket.model";
 jest.mock("../nats-wrapper");
 
 it("must return error if not signed in", async () => {
@@ -74,4 +75,24 @@ it("must publish an event", async () => {
     .expect(200);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
+
+it("must return error if ticket is reserved", async () => {
+  const ticket = ticketModel.build({
+    title: "test",
+    price: 10,
+    userId: "123",
+  });
+
+  ticket.set({ orderId: "123" });
+  await ticket.save();
+
+  await request(app)
+    .put(`/api/tickets/update/${ticket.id}`)
+    .set("Cookie", mockSignIn(true))
+    .send({
+      title: "test2",
+      price: 20,
+    })
+    .expect(400);
 });

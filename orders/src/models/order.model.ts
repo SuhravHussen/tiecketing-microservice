@@ -5,6 +5,7 @@ import {
   orderModelInterface,
 } from "../interfaces/order.interface";
 import { orderStatus } from "@sh-tickets/common";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 const orderSchema = new Schema(
   {
     userId: {
@@ -35,6 +36,9 @@ const orderSchema = new Schema(
     },
   }
 );
+
+orderSchema.set("versionKey", "version");
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (props: order) => {
   return new OrderModel(props);

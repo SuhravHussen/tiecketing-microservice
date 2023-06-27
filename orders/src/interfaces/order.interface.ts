@@ -7,6 +7,7 @@ export interface order {
   userId: string;
   status: orderStatus;
   expiresAt: Date;
+
   ticket:
     | {
         id: string;
@@ -21,6 +22,7 @@ export interface orderDocument extends order, Document {
   id: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
+  version: number;
 }
 
 // an interface that describes the properties

@@ -25,7 +25,7 @@ router.patch("/api/orders/cancel/:id", privateRoute, async (req, res, next) => {
           id: order.ticket.id.toString(),
           price: order.ticket.price,
         },
-        version: 4,
+        version: order.version,
       });
     }
     res.send({

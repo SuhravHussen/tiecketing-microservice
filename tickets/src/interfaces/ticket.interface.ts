@@ -11,6 +11,7 @@ export interface TicketDocument extends Ticket, Document {
   version: number;
   createdAt: Date;
   updatedAt: Date;
+  orderId?: string;
 }
 
 export interface TicketModelInterface extends Model<TicketDocument> {
