@@ -4,6 +4,7 @@ import app from "./app";
 import { natsWrapper } from "./nats-wrapper";
 import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
 import { TicketUpdatedListener } from "./events/listeners/ticket-updated-listener";
+import { ExpirationCompleteListener } from "./events/listeners/expiration-complete-listener";
 
 //mongodb
 const start = async () => {
@@ -24,6 +25,7 @@ const start = async () => {
       throw new HttpException(500, "NATS_CLUSTER_ID must be defined");
     }
 
+    //connect to nats
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
@@ -35,6 +37,7 @@ const start = async () => {
       process.exit();
     });
 
+    // listen to interupt signals like ctrl+c or docker stop
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
 
@@ -43,7 +46,9 @@ const start = async () => {
 
     new TicketCreatedListener(natsWrapper.client).listen();
     new TicketUpdatedListener(natsWrapper.client).listen();
+    new ExpirationCompleteListener(natsWrapper.client).listen();
 
+    //connect to mongodb
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to mongodb from orders");
 
