@@ -22,6 +22,7 @@ export class OrderCancelledListener extends Listener<OrderCancelledEventData> {
     order.set({ status: orderStatus.cancelled });
     await order.save();
 
+    console.log("Order cancelled: ", order);
     msg.ack();
   }
 }

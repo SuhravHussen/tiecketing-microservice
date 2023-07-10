@@ -23,6 +23,10 @@ const start = async () => {
       throw new HttpException(500, "NATS_CLUSTER_ID must be defined");
     }
 
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new HttpException(500, "STRIPE_SECRET_KEY must be defined");
+    }
+
     //connect to nats
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
