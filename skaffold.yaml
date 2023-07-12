@@ -42,6 +42,8 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+          - src: "**/*.jsx"
+            dest: .
 
     - image: suhravshan/expiration
       context: expiration
