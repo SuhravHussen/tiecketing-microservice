@@ -1,6 +1,6 @@
 import CardButton from "./cardButton";
 
-const Card = ({ ticket }) => {
+const Card = ({ ticket, purchased = false }) => {
   return (
     <div className="card w-96 bg-light shadow-xl">
       <div className="card-body">
@@ -11,7 +11,13 @@ const Card = ({ ticket }) => {
           can pay with cards 💳.
         </p>
         <div className="card-actions justify-end">
-          <CardButton ticket={ticket} />
+          {!purchased ? (
+            <CardButton ticket={ticket} />
+          ) : (
+            <p className="text-center text-white p-2 rounded bg-green-600">
+              Purchased
+            </p>
+          )}
         </div>
       </div>
     </div>
