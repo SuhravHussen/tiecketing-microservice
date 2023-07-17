@@ -60,6 +60,9 @@ function mainLayouts({ children }) {
               <li>
                 <a>Sell Tickets</a>
               </li>
+              <li>
+                <Link href={"/create-ticket"}>Create Ticket</Link>
+              </li>
             </ul>
           </div>
           <a href="/" className="btn btn-ghost normal-case text-xl">
@@ -75,6 +78,9 @@ function mainLayouts({ children }) {
 
               <li>
                 <a>Sell Tickets</a>
+              </li>
+              <li>
+                <Link href={"/create-ticket"}>Create Ticket</Link>
               </li>
             </ul>
           </div>

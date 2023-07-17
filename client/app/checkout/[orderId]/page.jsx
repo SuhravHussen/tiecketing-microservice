@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 
 const CheckoutPage = ({ params }) => {
   const [authenticated, setAuthenticated] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(60);
-
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [error, setError] = useState("");
   useEffect(() => {
     const getUser = async () => {
       const user = await getCurrentUser();
@@ -21,14 +21,46 @@ const CheckoutPage = ({ params }) => {
   }, []);
 
   useEffect(() => {
-    const timerId = setInterval(() => {
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
-
-    return () => {
-      clearInterval(timerId);
-    };
+    if (timeLeft && timeLeft <= 0) {
+      window.location.href = "/";
+    }
   }, [timeLeft]);
+
+  useEffect(() => {
+    const getOrderData = async () => {
+      try {
+        setError("");
+        const order = await fetch("/api/orders/" + params.orderId, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (order.status === 401) {
+          window.location.href = "/";
+          return;
+        }
+        const { data } = await order.json();
+        if (data.status === "complete" || data.status === "cancelled") {
+          window.location.href = "/";
+        }
+
+        const msLeft = new Date(data.expiresAt) - new Date();
+        setTimeLeft(Math.round(msLeft / 1000));
+
+        const timerId = setInterval(() => {
+          setTimeLeft((prevTime) => prevTime - 1);
+        }, 1000);
+
+        return () => {
+          clearInterval(timerId);
+        };
+      } catch (err) {
+        setError(err.message || "Something went wrong");
+      }
+    };
+
+    getOrderData();
+  }, []);
 
   if (!authenticated) {
     return (
@@ -57,12 +89,15 @@ const CheckoutPage = ({ params }) => {
             Pay with your card to buy This Ticket. You have {timeLeft} seconds
             to pay.
           </p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Pay</button>
-            <button onClick={onCancel} className="btn btn-ghost">
-              Cancel
-            </button>
-          </div>
+          {!error && (
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Pay</button>
+              <button onClick={onCancel} className="btn btn-ghost">
+                Cancel
+              </button>
+            </div>
+          )}
+          {error && <p className="text-red-500">{error}</p>}
         </div>
       </div>
     </div>

@@ -51,9 +51,7 @@ const MyOrders = () => {
       className="flex justify-center items-center flex-wrap gap-5"
     >
       {data.length &&
-        data.map((ticket) => (
-          <Card purchased key={ticket.id} ticket={ticket} />
-        ))}
+        data.map((ticket) => <Card key={ticket.id} ticket={ticket} />)}
 
       {error && <div>Something went wrong</div>}
 

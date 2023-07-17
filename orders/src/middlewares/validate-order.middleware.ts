@@ -16,7 +16,9 @@ const validateOrder = [
   body("ticketId")
     .not()
     .isEmpty()
-    .custom((i: string) => mongoose.Types.ObjectId.isValid(i))
+    .custom((i: string) => {
+      return mongoose.Types.ObjectId.isValid(i);
+    })
     .withMessage("TicketId must be provided and valid"),
   (req: any, res: any, next: any) => {
     const errors = validationResult(req);

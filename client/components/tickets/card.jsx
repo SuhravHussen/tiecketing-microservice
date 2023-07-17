@@ -11,13 +11,7 @@ const Card = ({ ticket, purchased = false }) => {
           can pay with cards 💳.
         </p>
         <div className="card-actions justify-end">
-          {!purchased ? (
-            <CardButton ticket={ticket} />
-          ) : (
-            <p className="text-center text-white p-2 rounded bg-green-600">
-              Purchased
-            </p>
-          )}
+          <CardButton ticket={ticket} />
         </div>
       </div>
     </div>
