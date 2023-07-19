@@ -1,5 +1,6 @@
 "use client";
 
+import WrappedForm from "@/components/Payment/StripeFrom";
 import { getCurrentUser } from "@/lib/getCurrentUser";
 import { useEffect, useState } from "react";
 
@@ -7,6 +8,9 @@ const CheckoutPage = ({ params }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [timeLeft, setTimeLeft] = useState(null);
   const [error, setError] = useState("");
+
+  const [showCardElement, setShowCardElement] = useState(false);
+
   useEffect(() => {
     const getUser = async () => {
       const user = await getCurrentUser();
@@ -80,26 +84,35 @@ const CheckoutPage = ({ params }) => {
   return (
     <div
       style={{ minHeight: "inherit" }}
-      className="text-2xl flex justify-center items-center"
+      className="text-2xl flex justify-center items-center w-full"
     >
-      <div className="card w-96 bg-purple shadow-md">
-        <div className="card-body items-center text-center">
-          <h2 className="card-title">PAY!</h2>
-          <p className="text-lg m-2">
-            Pay with your card to buy This Ticket. You have {timeLeft} seconds
-            to pay.
-          </p>
-          {!error && (
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Pay</button>
-              <button onClick={onCancel} className="btn btn-ghost">
-                Cancel
-              </button>
-            </div>
-          )}
-          {error && <p className="text-red-500">{error}</p>}
+      {!showCardElement && (
+        <div className="card w-96 bg-purple shadow-md">
+          <div className="card-body items-center text-center">
+            <h2 className="card-title">PAY!</h2>
+            <p className="text-lg m-2">
+              Pay with your card to buy This Ticket. You have {timeLeft} seconds
+              to pay.
+            </p>
+
+            {!error && (
+              <div className="card-actions justify-end">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setShowCardElement(true)}
+                >
+                  Pay
+                </button>
+                <button onClick={onCancel} className="btn btn-ghost">
+                  Cancel Order
+                </button>
+              </div>
+            )}
+            {error && <p className="text-red-500">{error}</p>}
+          </div>
         </div>
-      </div>
+      )}
+      {showCardElement && <WrappedForm orderId={params.orderId} />}
     </div>
   );
 };

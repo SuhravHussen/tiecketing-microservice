@@ -5,7 +5,12 @@ import { privateRoute } from "@sh-tickets/common";
 const router = Router();
 
 router.get("/api/tickets/all", async (req, res) => {
-  const tickets = await ticketModel.find({});
+  const tickets = await ticketModel.find({
+    $or: [
+      { orderId: null },
+      { orderId: { $exists: false } }, // Check for undefined as well
+    ],
+  });
   if (!tickets.length) {
     return res.status(404).send({
       message: "Tickets not found",

@@ -39,7 +39,7 @@ const createTicket = () => {
 
       if (res.status === 200 || res.status === 201) {
         alert("Ticket created successfully");
-        e.reset();
+        e.target.reset();
       }
     } catch (err) {
       setError(err.message || "Something went wrong");

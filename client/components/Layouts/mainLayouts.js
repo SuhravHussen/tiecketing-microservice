@@ -58,10 +58,7 @@ function mainLayouts({ children }) {
               </li>
 
               <li>
-                <a>Sell Tickets</a>
-              </li>
-              <li>
-                <Link href={"/create-ticket"}>Create Ticket</Link>
+                <Link href={"/create-ticket"}>Sell Ticket</Link>
               </li>
             </ul>
           </div>
@@ -77,10 +74,7 @@ function mainLayouts({ children }) {
               </li>
 
               <li>
-                <a>Sell Tickets</a>
-              </li>
-              <li>
-                <Link href={"/create-ticket"}>Create Ticket</Link>
+                <Link href={"/create-ticket"}>Sell Ticket</Link>
               </li>
             </ul>
           </div>
