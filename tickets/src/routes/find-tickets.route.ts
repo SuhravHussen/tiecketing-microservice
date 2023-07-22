@@ -25,6 +25,26 @@ router.get("/api/tickets/all", async (req, res) => {
   });
 });
 
+router.get("/api/tickets/userticket", privateRoute, async (req, res) => {
+  const tickets = await ticketModel.find({
+    userId: req.user!.id,
+  });
+
+  if (!tickets.length) {
+    return res.status(404).send({
+      message: "Tickets not found",
+      data: null,
+      error: false,
+    });
+  } else {
+    return res.status(200).send({
+      message: "Tickets found ",
+      data: tickets,
+      error: false,
+    });
+  }
+});
+
 router.get("/api/tickets/:id", privateRoute, async (req, res) => {
   const ticket = await ticketModel.findById(req.params.id);
   if (!ticket) {
