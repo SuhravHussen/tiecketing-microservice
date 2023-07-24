@@ -8,18 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16" # Replace this with the version of Node.js your project requires
-
-      - name: Install Yarn dependencies in auth folder
-        run: cd auth && yarn install
-
-      - name: Run tests in auth folder
-        run: cd auth && yarn test:ci
+      - uses: actions/checkout@v2
+      - run: cd auth && npm i && npm run test:ci
