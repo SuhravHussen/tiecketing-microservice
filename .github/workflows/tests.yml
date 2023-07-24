@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: "16" # Replace this with the version of Node.js your project requires
 
-      - name: Install Yarn dependencies
-        run: yarn install
+      - name: Install Yarn dependencies in auth folder
+        run: cd auth && yarn install
 
-      - name: Run tests
-        run: yarn test:ci
+      - name: Run tests in auth folder
+        run: cd auth && yarn test:ci
