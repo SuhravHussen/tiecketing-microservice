@@ -5,6 +5,7 @@ import app from "./app";
 //mongodb
 const start = async () => {
   try {
+    console.log("Starting up auth service...");
     if (!process.env.JWT_SECRET || !process.env.MONGO_URI) {
       throw new HttpException(500, " env must be defined");
     }
