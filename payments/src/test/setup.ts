@@ -7,7 +7,7 @@ beforeAll(async () => {
   process.env.JWT_SECRET = "test";
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-  const mongo = await MongoMemoryServer.create();
+  let mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
   await mongoose.connect(mongoUri, {});
