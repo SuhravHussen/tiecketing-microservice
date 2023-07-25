@@ -46,18 +46,26 @@ router.get("/api/tickets/userticket", privateRoute, async (req, res) => {
 });
 
 router.get("/api/tickets/:id", privateRoute, async (req, res) => {
-  const ticket = await ticketModel.findById(req.params.id);
-  if (!ticket) {
-    return res.status(404).send({
-      message: "Ticket not found",
+  try {
+    const ticket = await ticketModel.findById(req.params.id);
+    if (!ticket) {
+      return res.status(404).send({
+        message: "Ticket not found",
+        data: null,
+        error: true,
+      });
+    } else {
+      return res.status(200).send({
+        message: "Ticket found",
+        data: ticket,
+        error: false,
+      });
+    }
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message || "Internal Server Error",
       data: null,
       error: true,
-    });
-  } else {
-    return res.status(200).send({
-      message: "Ticket found",
-      data: ticket,
-      error: false,
     });
   }
 });
