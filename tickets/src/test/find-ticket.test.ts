@@ -8,7 +8,7 @@ it("must be signed in to find a ticket", async () => {
 });
 
 it("must return an error if the ticket is not found", async () => {
-  request(app)
+  await request(app)
     .get(`/api/tickets/647abea0ed015d62155716b8`)
     .set("Cookie", mockSignIn(true))
     .send({})
@@ -16,7 +16,7 @@ it("must return an error if the ticket is not found", async () => {
 });
 
 it("must return a error id id is invalid", async () => {
-  request(app)
+  await request(app)
     .get(`/api/tickets/sdsdsd`)
     .set("Cookie", mockSignIn(true))
     .send({})

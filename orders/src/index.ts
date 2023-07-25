@@ -9,6 +9,8 @@ import { PaymentsSuccessListener } from "./events/listeners/payment-success-list
 
 //mongodb
 const start = async () => {
+  console.log("Starting up orders service...");
+
   try {
     if (!process.env.JWT_SECRET || !process.env.MONGO_URI) {
       throw new HttpException(500, "env must be defined");

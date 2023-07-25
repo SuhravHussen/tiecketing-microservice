@@ -4,6 +4,8 @@ import { OrderCreatedListener } from "./events/listeners/order-created-listener"
 
 //mongodb
 const start = async () => {
+  console.log("Starting up expiration service...");
+
   try {
     if (!process.env.NATS_CLIENT_ID) {
       throw new HttpException(500, "NATS_CLIENT_ID must be defined");
