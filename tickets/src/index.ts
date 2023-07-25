@@ -7,6 +7,7 @@ import { OrderCancelledListener } from "./events/listeners/order-cancelled-liste
 
 //mongodb
 const start = async () => {
+  console.log("Starting up tickets service...");
   try {
     if (!process.env.JWT_SECRET || !process.env.MONGO_URI) {
       throw new HttpException(500, "env must be defined");

@@ -6,6 +6,7 @@ import { OrderCancelledListener } from "./events/listeners/order-cancelled-liste
 import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 
 const start = async () => {
+  console.log("Starting up payments service...");
   try {
     if (!process.env.JWT_SECRET || !process.env.MONGO_URI) {
       throw new HttpException(500, "env must be defined");
