@@ -2,6 +2,8 @@ name: Run Auth Tests on Pull Request
 
 on:
   pull_request:
+    paths:
+      - "auth/**"
     branches:
       - main
 
