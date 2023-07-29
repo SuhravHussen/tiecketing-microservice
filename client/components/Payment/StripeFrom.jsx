@@ -10,10 +10,6 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
 
-const stripePromise = loadStripe(
-  "pk_test_51NRr9bIndx874OiZozA9dpnj6kndMCEOfrl3PDgiQmngW6HkO1rwPZgAxTxUgDVfsM0WQumY1rtqZspYFHgpdSVu00l8QI3bDt"
-);
-
 const MyForm = ({ orderId }) => {
   const stripe = useStripe();
   const router = useRouter();
@@ -92,10 +88,19 @@ const MyForm = ({ orderId }) => {
   );
 };
 
-const WrappedForm = ({ orderId }) => (
-  <Elements stripe={stripePromise}>
-    <MyForm orderId={orderId} />
-  </Elements>
-);
+const WrappedForm = ({ orderId }) => {
+  if (!process.env.STRIPE_PUBLISHABLE_KEY) {
+    return <p>Something went wrong</p>;
+  }
 
+  console.log("coming");
+
+  const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+
+  return (
+    <Elements stripe={stripePromise}>
+      <MyForm orderId={orderId} />
+    </Elements>
+  );
+};
 export default WrappedForm;

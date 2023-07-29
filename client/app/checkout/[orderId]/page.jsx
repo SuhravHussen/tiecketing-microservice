@@ -11,6 +11,8 @@ const CheckoutPage = ({ params }) => {
 
   const [showCardElement, setShowCardElement] = useState(false);
 
+  console.log("STRIPE Key", process.env.STRIPE_PUBLISHABLE_KEY);
+
   useEffect(() => {
     const getUser = async () => {
       const user = await getCurrentUser();
